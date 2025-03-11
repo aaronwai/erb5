@@ -1,8 +1,11 @@
 from django.shortcuts import render, get_object_or_404
 from . models import Listing
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.db.models import Q, F
+from listings.choices import price_choices, bedroom_choices, district_choices   
 # Create your views here.
 def listings(request):
+    #listings = Listing.objects.filter(district=F('address'))
     listings = Listing.objects.order_by('-list_date').filter(is_published=True)
     paginator = Paginator(listings, 3)
     page = request.GET.get('page')
